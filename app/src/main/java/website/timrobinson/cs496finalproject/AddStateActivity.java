@@ -200,20 +200,11 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                     AsyncHttpPost asyncHttpPostNewState = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
                         @Override
                         public void processFinish(String output) {
-                            // Get the new State ID and pass it into the intent to the next activity
-//                            JSONObject newStateObj;
-//
-//                            try {
-//                                newStateObj = new JSONObject(output.toString());
 
                             Intent goToSenators = new Intent(getApplicationContext(), AddSenatorsActivity.class);
                             goToSenators.putExtra("stateId", output);
                             startActivity(goToSenators);
-//
-//                              goToSenators.putExtra("stateId", newStateObj.get("key").toString());
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
+
                             Toast successToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
                             successToast.show();
                         }
