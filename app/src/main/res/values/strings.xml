@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CS 496 Final Project</string>
+    <string name="edit_name">Edit User</string>
+    <string name="state_name">Add State</string>
+    <string name="create_name">Create New User</string>
+    <string name="login_name">Login</string>
+    <string name="action_settings">Settings</string>
+</resources>
