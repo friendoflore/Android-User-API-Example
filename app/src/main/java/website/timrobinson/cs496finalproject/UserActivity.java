@@ -9,14 +9,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class UserActivity extends AppCompatActivity implements OnClickListener{
 
     final String[] userData = new String[1];
+    final String[] stateId = new String[1];
+    final String[] stateData = new String[1];
+    final String[] senatorData1 = new String[1];
+    final String[] senatorData2 = new String[1];
 
     String userKey = "";
+    String stateIdNum;
+    String senatorKey1;
+    String senatorKey2;
 
     TextView username;
     TextView description;
@@ -27,10 +37,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
     TextView editUser;
     TextView addStateInfo;
 
-//    final String[] dUserKey = new String[1];
-//    final String[] dUsername = new String[1];
-//    final String[] dDescription = new String[1];
-//    final String[] dState = new String[1];
+    int requestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +62,15 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
             userKey = extras.getString("USER_ID");
         }
         String userURL = "http://user-api-1246.appspot.com/user/" + userKey;
+        final String stateSearchURL = "http://senators-1208.appspot.com/state/search";
+        final String[] stateURL = new String[1];
+        final String[] senatorURL1 = new String[1];
+        final String[] senatorURL2 = new String[1];
         Toast urlToast = Toast.makeText(getApplicationContext(), "URL: " + userURL, Toast.LENGTH_SHORT);
         urlToast.show();
 
+        // Get the user data
         AsyncHttpGet asyncHttpGet = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
-
             @Override
             public void processFinish(String output) {
                 userData[0] = output;
@@ -85,9 +96,105 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                     } else {
                         state.setText(userJSON.get("state").toString());
                         // Do Get request of the other API
-                        // This will actually take 3 GET requests, since we'll get Senator IDs
+                        // This will actually take 4 GET requests, since we'll get state id, Senator IDs
                         // and then 2 more GET requests to get the senator names.
 
+                        HashMap<String, String> data = new HashMap<String, String>();
+                        data.put("name", userJSON.get("state").toString());
+
+
+                        // Get the user's state ID
+                        AsyncHttpPost asyncHttpPostStateId = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
+                            @Override
+                            public void processFinish(String output) {
+                                stateId[0] = output;
+                                Toast testToast = Toast.makeText(getApplicationContext(), "State ID: " + stateId[0], Toast.LENGTH_SHORT);
+                                testToast.show();
+
+//                                JSONObject stateIdObj;
+
+//                                try {
+//                                    stateIdObj = new JSONObject(stateId[0]);
+//                                    stateIdNum = stateIdObj.get("key").toString();
+
+                                    stateURL[0] = "http://senators-1208.appspot.com/state/" + stateId[0];
+
+
+                                    // Get the user's state data
+                                    AsyncHttpGet asyncHttpGetStateData = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                        @Override
+                                        public void processFinish(String output) {
+                                            stateData[0] = output;
+                                            Toast testToast = Toast.makeText(getApplicationContext(), "State data: " + stateData[0], Toast.LENGTH_SHORT);
+                                            testToast.show();
+
+                                            JSONObject stateDataObj;
+
+                                            try {
+                                                stateDataObj = new JSONObject(stateData[0]);
+                                                JSONArray senatorArray = (JSONArray) stateDataObj.get("senators");
+                                                senatorKey1 = senatorArray.get(0).toString();
+                                                senatorKey2 = senatorArray.get(1).toString();
+
+                                                senatorURL1[0] = "http://senators-1208.appspot.com/senator/" + senatorKey1;
+                                                senatorURL2[0] = "http://senators-1208.appspot.com/senator/" + senatorKey2;
+
+
+                                                // Get the user's state's first senator
+                                                AsyncHttpGet asyncHttpGetSenator1 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                                    @Override
+                                                    public void processFinish(String output) {
+                                                        senatorData1[0] = output;
+
+                                                        Toast testToast = Toast.makeText(getApplicationContext(), "Sen 1 data: " + senatorData1[0], Toast.LENGTH_SHORT);
+                                                        testToast.show();
+
+                                                        JSONObject senator1Obj;
+
+                                                        try {
+                                                            senator1Obj = new JSONObject(senatorData1[0]);
+                                                            senator1.setText(senator1Obj.get("name").toString());
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                                asyncHttpGetSenator1.execute(senatorURL1[0]);
+
+                                                // Get the user's state's second senator
+                                                AsyncHttpGet asyncHttpGetSenator2 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                                    @Override
+                                                    public void processFinish(String output) {
+                                                        senatorData2[0] = output;
+
+                                                        Toast testToast = Toast.makeText(getApplicationContext(), "Sen 2 data: " + senatorData2[0], Toast.LENGTH_SHORT);
+                                                        testToast.show();
+
+                                                        JSONObject senator2Obj;
+
+                                                        try {
+                                                            senator2Obj = new JSONObject(senatorData2[0]);
+                                                            senator2.setText(senator2Obj.get("name").toString());
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                                asyncHttpGetSenator2.execute(senatorURL2[0]);
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                    asyncHttpGetStateData.execute(stateURL[0]);
+//                                }
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+                            }
+                        }, data);
+                        asyncHttpPostStateId.execute(stateSearchURL);
 
                     }
 
@@ -113,7 +220,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                 goToEditActivity.putExtra("USER_ID", userKey);
                 goToEditActivity.putExtra("username", username.getText());
                 goToEditActivity.putExtra("description", description.getText());
-                startActivity(goToEditActivity);
+                startActivityForResult(goToEditActivity, requestCode);
+
                 break;
             case R.id.addStateButton:
                 // Go to LoginActivity
@@ -123,10 +231,17 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                 Intent goToAddStateActivity = new Intent(getApplicationContext(), AddStateActivity.class);
                 goToAddStateActivity.putExtra("USER_ID", userKey);
                 goToAddStateActivity.putExtra("state", state.getText());
-                startActivity(goToAddStateActivity);
+                startActivityForResult(goToAddStateActivity, requestCode);
+
                 break;
             default:
                 break;
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Intent restartIntent = getIntent();
+        finish();
+        startActivity(restartIntent);
     }
 }

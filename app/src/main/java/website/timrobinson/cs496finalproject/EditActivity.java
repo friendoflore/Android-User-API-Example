@@ -1,5 +1,6 @@
 package website.timrobinson.cs496finalproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class EditActivity extends AppCompatActivity implements OnClickListener{
 
@@ -44,6 +48,22 @@ public class EditActivity extends AppCompatActivity implements OnClickListener{
 
     @Override
     public void onClick(View v) {
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.put("user_id", userKey);
+        data.put("description", description.getText().toString());
 
+        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
+
+            @Override
+            public void processFinish(String output) {
+                //userKey[0] = output;
+                Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+                testToast.show();
+
+                finish();
+                return;
+            }
+        }, data);
+        asyncHttpPost.execute("http://user-api-1246.appspot.com/edit");
     }
 }

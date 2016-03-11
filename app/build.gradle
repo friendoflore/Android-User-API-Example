@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "website.timrobinson.cs496finalproject"
-        minSdkVersion 8
+        minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
