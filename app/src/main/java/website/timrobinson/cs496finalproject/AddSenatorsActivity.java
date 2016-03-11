@@ -117,8 +117,8 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
                 @Override
                 public void processFinish(String output) {
                     sen1Key = output;
-                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                    testToast.show();
+//                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+//                    testToast.show();
 
                     HashMap<String, String> data2 = new HashMap<String, String>();
                     data2.put("name", szSen2Name);
@@ -138,8 +138,8 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
                             AsyncHttpPut asyncHttpPut1 = new AsyncHttpPut(new AsyncHttpPut.AsyncResponse() {
                                 @Override
                                 public void processFinish(String output) {
-                                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                                    testToast.show();
+//                                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+//                                    testToast.show();
                                 }
                             });
                             asyncHttpPut1.execute(putURL);
@@ -148,11 +148,13 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
                             AsyncHttpPut asyncHttpPut2 = new AsyncHttpPut(new AsyncHttpPut.AsyncResponse() {
                                 @Override
                                 public void processFinish(String output) {
-                                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                                    testToast.show();
+//                                    Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+//                                    testToast.show();
                                 }
                             });
                             asyncHttpPut2.execute(putURL);
+
+                            finish();
                         }
                     }, data2);
                     asyncHttpPost2.execute("http://senators-1208.appspot.com/senator");

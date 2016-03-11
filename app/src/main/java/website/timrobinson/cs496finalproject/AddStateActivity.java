@@ -163,8 +163,8 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
 
                     @Override
                     public void processFinish(String output) {
-                        Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                        testToast.show();
+//                        Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+//                        testToast.show();
                         finish();
                         return;
                     }
@@ -204,9 +204,9 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                             Intent goToSenators = new Intent(getApplicationContext(), AddSenatorsActivity.class);
                             goToSenators.putExtra("stateId", output);
                             startActivity(goToSenators);
-
-                            Toast successToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                            successToast.show();
+                            finish();
+//                            Toast successToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+//                            successToast.show();
                         }
                     }, stateData);
                     asyncHttpPostNewState.execute("http://senators-1208.appspot.com/state");

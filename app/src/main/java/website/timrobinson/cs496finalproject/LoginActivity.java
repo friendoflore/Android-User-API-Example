@@ -70,19 +70,20 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 @Override
                 public void processFinish(String output) {
                     userKey[0] = output;
-                    Toast testToast = Toast.makeText(getApplicationContext(), userKey[0], Toast.LENGTH_SHORT);
-                    testToast.show();
 
-                    Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
-                    goToLoggedIn.putExtra("USER_ID", userKey[0]);
-                    startActivity(goToLoggedIn);
+                    if (userKey[0].equals("")) {
+                        Toast loginFailed = Toast.makeText(getApplicationContext(), "Either username or password is incorrect", Toast.LENGTH_SHORT);
+                        loginFailed.show();
+                    } else {
+                        Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
+                        goToLoggedIn.putExtra("USER_ID", userKey[0]);
+                        startActivity(goToLoggedIn);
+                    }
                 }
             }, data);
             asyncHttpPost.execute("http://user-api-1246.appspot.com/user/search");
 
-
         }
-
 
     }
 }

@@ -17,6 +17,7 @@ public class EditActivity extends AppCompatActivity implements OnClickListener{
     TextView username;
     EditText description;
     Button submitUpdate;
+    TextView submitDelete;
 
     String userKey;
     String usernameText;
@@ -30,8 +31,10 @@ public class EditActivity extends AppCompatActivity implements OnClickListener{
         username = (TextView) findViewById(R.id.username);
         description = (EditText) findViewById(R.id.description);
         submitUpdate = (Button) findViewById(R.id.submitUpdate);
+        submitDelete = (TextView) findViewById(R.id.deleteButton);
 
         submitUpdate.setOnClickListener(this);
+        submitDelete.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -41,29 +44,48 @@ public class EditActivity extends AppCompatActivity implements OnClickListener{
         }
 
         username.setText(usernameText);
-        description.setText(descriptionText, EditText.BufferType.EDITABLE);
+        if (descriptionText.equals("No description added")) {
+            description.setHint(descriptionText);
+        } else {
+            description.setText(descriptionText, EditText.BufferType.EDITABLE);
+        }
 
         // We need the user data for this one and then we'll do a POST request to "../edit"
     }
 
     @Override
     public void onClick(View v) {
-        HashMap<String, String> data = new HashMap<String, String>();
-        data.put("user_id", userKey);
-        data.put("description", description.getText().toString());
+        switch (v.getId()) {
+            case R.id.submitUpdate:
+                HashMap<String, String> data = new HashMap<String, String>();
+                data.put("user_id", userKey);
+                data.put("description", description.getText().toString());
 
-        AsyncHttpPost asyncHttpPost = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
+                AsyncHttpPost asyncHttpPost = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
 
-            @Override
-            public void processFinish(String output) {
-                //userKey[0] = output;
-                Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-                testToast.show();
+                    @Override
+                    public void processFinish(String output) {
+                        finish();
+                        return;
+                    }
+                }, data);
+                asyncHttpPost.execute("http://user-api-1246.appspot.com/edit");
+                break;
+            case R.id.deleteButton:
+                String deleteURL = "http://user-api-1246.appspot.com/edit/" + userKey;
+                AsyncHttpDelete asyncHttpDelete = new AsyncHttpDelete(new AsyncHttpDelete.AsyncResponse() {
 
-                finish();
-                return;
-            }
-        }, data);
-        asyncHttpPost.execute("http://user-api-1246.appspot.com/edit");
+                    @Override
+                    public void processFinish(String output) {
+                        finish();
+                        return;
+                    }
+                });
+                asyncHttpDelete.execute(deleteURL);
+                break;
+            default:
+                break;
+        }
+
     }
 }
