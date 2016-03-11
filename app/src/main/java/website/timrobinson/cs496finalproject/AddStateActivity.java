@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +50,7 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
         state = (TextView) findViewById(R.id.state);
         population = (EditText) findViewById(R.id.population);
         medianIncome = (EditText) findViewById(R.id.medianIncome);
-        costOfLivingIndex = (EditText) findViewById(R.id.largestEmployer);
+        costOfLivingIndex = (EditText) findViewById(R.id.costOfLivingIndex);
         largestEmployer = (EditText) findViewById(R.id.largestEmployer);
         submitState = (Button) findViewById(R.id.submitState);
         submitStateInfo = (Button) findViewById(R.id.submitStateInfo);
@@ -169,6 +172,59 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                 asyncHttpPost.execute("http://user-api-1246.appspot.com/edit");
                 break;
             case R.id.submitStateInfo:
+                boolean flag = true;
+                String toastMessage = "All fields must be completed";
+                Toast validateToast = Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT);
+                if (population.getText().toString().trim().equals("")) {
+                    flag = false;
+                }
+                if (medianIncome.getText().toString().trim().equals("")) {
+                    flag = false;
+                }
+                if (costOfLivingIndex.getText().toString().trim().equals("")) {
+                    flag = false;
+                }
+                if (largestEmployer.getText().toString().trim().equals("")) {
+                    flag = false;
+                }
+
+                if (flag) {
+                    // Run the POST, etc.
+                    HashMap<String, String> stateData = new HashMap<String, String>();
+                    stateData.put("name", state.getText().toString());
+                    stateData.put("population", population.getText().toString());
+                    stateData.put("cost_of_living", costOfLivingIndex.getText().toString());
+                    stateData.put("median_income", medianIncome.getText().toString());
+                    stateData.put("largest_employer", largestEmployer.getText().toString());
+
+                    AsyncHttpPost asyncHttpPostNewState = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
+                        @Override
+                        public void processFinish(String output) {
+                            // Get the new State ID and pass it into the intent to the next activity
+//                            JSONObject newStateObj;
+//
+//                            try {
+//                                newStateObj = new JSONObject(output.toString());
+
+                            Intent goToSenators = new Intent(getApplicationContext(), AddSenatorsActivity.class);
+                            goToSenators.putExtra("stateId", output);
+                            startActivity(goToSenators);
+//
+//                              goToSenators.putExtra("stateId", newStateObj.get("key").toString());
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+                            Toast successToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
+                            successToast.show();
+                        }
+                    }, stateData);
+                    asyncHttpPostNewState.execute("http://senators-1208.appspot.com/state");
+
+
+                } else {
+                    validateToast.show();
+                }
+
                 break;
             default:
                 break;

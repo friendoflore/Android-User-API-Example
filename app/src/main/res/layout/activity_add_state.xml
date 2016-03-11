@@ -75,6 +75,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/population"
+        android:hint="Population"
         android:visibility="gone"
         android:layout_below="@+id/state"
         android:layout_alignParentLeft="true"
@@ -86,6 +87,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/medianIncome"
+        android:hint="Median Income"
         android:visibility="gone"
         android:layout_below="@+id/population"
         android:layout_alignParentLeft="true"
@@ -94,9 +96,10 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/costOfLivingIndex"
+        android:hint="Cost of Living Index"
         android:visibility="gone"
         android:layout_below="@+id/medianIncome"
         android:layout_alignParentLeft="true"
@@ -106,6 +109,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/largestEmployer"
+        android:ems="16"
+        android:hint="Largest Employer"
         android:visibility="gone"
         android:layout_below="@+id/costOfLivingIndex"
         android:layout_alignParentLeft="true"
@@ -141,5 +146,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="112dp" />
+        android:layout_marginBottom="76dp" />
 </RelativeLayout>

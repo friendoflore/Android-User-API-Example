@@ -7,66 +7,51 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="website.timrobinson.cs496finalproject.UserActivity">
+    tools:context="website.timrobinson.cs496finalproject.AddSenatorsActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/username"
+        android:text="Senator 1"
+        android:id="@+id/sen1Label"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=""
-        android:id="@+id/description"
-        android:layout_below="@+id/username"
+        android:id="@+id/sen1Name"
+        android:layout_below="@+id/sen1Label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="State"
-        android:id="@+id/stateLabel"
-        android:layout_below="@+id/description"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="65dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/USState"
-        android:layout_below="@+id/stateLabel"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/sen1Years"
+        android:layout_below="@+id/sen1Name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Senators"
-        android:id="@+id/SenatorsLabel"
-        android:layout_below="@+id/USState"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/sen1NetWorth"
+        android:layout_below="@+id/sen1Years"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/senator1"
-        android:layout_below="@+id/SenatorsLabel"
+        android:id="@+id/sen1LargestIndustry"
+        android:layout_below="@+id/sen1NetWorth"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -74,31 +59,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/senator2"
-        android:layout_below="@+id/senator1"
+        android:text="Senator 2"
+        android:id="@+id/sen2Label"
+        android:layout_below="@+id/sen1LargestIndustry"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Edit"
-        android:id="@+id/EditButton"
-        android:textColor="#0000ee"
-        android:layout_below="@+id/description"
+        android:id="@+id/sen2Name"
+        android:layout_below="@+id/sen2Label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Add State Info"
-        android:id="@+id/addStateButton"
-        android:textColor="#0000ee"
-        android:layout_below="@+id/senator2"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/sen2Years"
+        android:layout_below="@+id/sen2Name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/sen2NetWorth"
+        android:layout_below="@+id/sen2Years"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sen2LargestIndustry"
+        android:layout_below="@+id/sen2NetWorth"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Senators"
+        android:id="@+id/senatorSubmit"
+        android:layout_below="@+id/sen2LargestIndustry"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

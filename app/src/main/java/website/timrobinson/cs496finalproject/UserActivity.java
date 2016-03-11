@@ -24,7 +24,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
     final String[] senatorData2 = new String[1];
 
     String userKey = "";
-    String stateIdNum;
     String senatorKey1;
     String senatorKey2;
 
@@ -95,10 +94,10 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                         senator2.setText("");
                     } else {
                         state.setText(userJSON.get("state").toString());
+
                         // Do Get request of the other API
                         // This will actually take 4 GET requests, since we'll get state id, Senator IDs
                         // and then 2 more GET requests to get the senator names.
-
                         HashMap<String, String> data = new HashMap<String, String>();
                         data.put("name", userJSON.get("state").toString());
 
@@ -111,87 +110,77 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                                 Toast testToast = Toast.makeText(getApplicationContext(), "State ID: " + stateId[0], Toast.LENGTH_SHORT);
                                 testToast.show();
 
-//                                JSONObject stateIdObj;
-
-//                                try {
-//                                    stateIdObj = new JSONObject(stateId[0]);
-//                                    stateIdNum = stateIdObj.get("key").toString();
-
-                                    stateURL[0] = "http://senators-1208.appspot.com/state/" + stateId[0];
+                                stateURL[0] = "http://senators-1208.appspot.com/state/" + stateId[0];
 
 
-                                    // Get the user's state data
-                                    AsyncHttpGet asyncHttpGetStateData = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
-                                        @Override
-                                        public void processFinish(String output) {
-                                            stateData[0] = output;
-                                            Toast testToast = Toast.makeText(getApplicationContext(), "State data: " + stateData[0], Toast.LENGTH_SHORT);
-                                            testToast.show();
+                                // Get the user's state data
+                                AsyncHttpGet asyncHttpGetStateData = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                    @Override
+                                    public void processFinish(String output) {
+                                        stateData[0] = output;
+                                        Toast testToast = Toast.makeText(getApplicationContext(), "State data: " + stateData[0], Toast.LENGTH_SHORT);
+                                        testToast.show();
 
-                                            JSONObject stateDataObj;
+                                        JSONObject stateDataObj;
 
-                                            try {
-                                                stateDataObj = new JSONObject(stateData[0]);
-                                                JSONArray senatorArray = (JSONArray) stateDataObj.get("senators");
-                                                senatorKey1 = senatorArray.get(0).toString();
-                                                senatorKey2 = senatorArray.get(1).toString();
+                                        try {
+                                            stateDataObj = new JSONObject(stateData[0]);
+                                            JSONArray senatorArray = (JSONArray) stateDataObj.get("senators");
+                                            senatorKey1 = senatorArray.get(0).toString();
+                                            senatorKey2 = senatorArray.get(1).toString();
 
-                                                senatorURL1[0] = "http://senators-1208.appspot.com/senator/" + senatorKey1;
-                                                senatorURL2[0] = "http://senators-1208.appspot.com/senator/" + senatorKey2;
+                                            senatorURL1[0] = "http://senators-1208.appspot.com/senator/" + senatorKey1;
+                                            senatorURL2[0] = "http://senators-1208.appspot.com/senator/" + senatorKey2;
 
 
-                                                // Get the user's state's first senator
-                                                AsyncHttpGet asyncHttpGetSenator1 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
-                                                    @Override
-                                                    public void processFinish(String output) {
-                                                        senatorData1[0] = output;
+                                            // Get the user's state's first senator
+                                            AsyncHttpGet asyncHttpGetSenator1 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                                @Override
+                                                public void processFinish(String output) {
+                                                    senatorData1[0] = output;
 
-                                                        Toast testToast = Toast.makeText(getApplicationContext(), "Sen 1 data: " + senatorData1[0], Toast.LENGTH_SHORT);
-                                                        testToast.show();
+                                                    Toast testToast = Toast.makeText(getApplicationContext(), "Sen 1 data: " + senatorData1[0], Toast.LENGTH_SHORT);
+                                                    testToast.show();
 
-                                                        JSONObject senator1Obj;
+                                                    JSONObject senator1Obj;
 
-                                                        try {
-                                                            senator1Obj = new JSONObject(senatorData1[0]);
-                                                            senator1.setText(senator1Obj.get("name").toString());
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
+                                                    try {
+                                                        senator1Obj = new JSONObject(senatorData1[0]);
+                                                        senator1.setText(senator1Obj.get("name").toString());
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
                                                     }
-                                                });
-                                                asyncHttpGetSenator1.execute(senatorURL1[0]);
+                                                }
+                                            });
+                                            asyncHttpGetSenator1.execute(senatorURL1[0]);
 
-                                                // Get the user's state's second senator
-                                                AsyncHttpGet asyncHttpGetSenator2 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
-                                                    @Override
-                                                    public void processFinish(String output) {
-                                                        senatorData2[0] = output;
+                                            // Get the user's state's second senator
+                                            AsyncHttpGet asyncHttpGetSenator2 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
+                                                @Override
+                                                public void processFinish(String output) {
+                                                    senatorData2[0] = output;
 
-                                                        Toast testToast = Toast.makeText(getApplicationContext(), "Sen 2 data: " + senatorData2[0], Toast.LENGTH_SHORT);
-                                                        testToast.show();
+                                                    Toast testToast = Toast.makeText(getApplicationContext(), "Sen 2 data: " + senatorData2[0], Toast.LENGTH_SHORT);
+                                                    testToast.show();
 
-                                                        JSONObject senator2Obj;
+                                                    JSONObject senator2Obj;
 
-                                                        try {
-                                                            senator2Obj = new JSONObject(senatorData2[0]);
-                                                            senator2.setText(senator2Obj.get("name").toString());
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
+                                                    try {
+                                                        senator2Obj = new JSONObject(senatorData2[0]);
+                                                        senator2.setText(senator2Obj.get("name").toString());
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
                                                     }
-                                                });
-                                                asyncHttpGetSenator2.execute(senatorURL2[0]);
+                                                }
+                                            });
+                                            asyncHttpGetSenator2.execute(senatorURL2[0]);
 
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-                                    });
-                                    asyncHttpGetStateData.execute(stateURL[0]);
-//                                }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
+                                    }
+                                });
+                                asyncHttpGetStateData.execute(stateURL[0]);
                             }
                         }, data);
                         asyncHttpPostStateId.execute(stateSearchURL);
