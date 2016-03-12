@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sen1Name"
+        android:hint="Name"
         android:layout_below="@+id/sen1Label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -33,6 +34,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/sen1Years"
+        android:hint="Years in office"
         android:layout_below="@+id/sen1Name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -43,6 +45,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/sen1NetWorth"
+        android:hint="Net worth"
         android:layout_below="@+id/sen1Years"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -51,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sen1LargestIndustry"
+        android:hint="Largest contributing industry"
         android:layout_below="@+id/sen1NetWorth"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -69,6 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sen2Name"
+        android:hint="Name"
         android:layout_below="@+id/sen2Label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -79,6 +84,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/sen2Years"
+        android:hint="Years in office"
         android:layout_below="@+id/sen2Name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -89,6 +95,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/sen2NetWorth"
+        android:hint="Net worth"
         android:layout_below="@+id/sen2Years"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -97,6 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sen2LargestIndustry"
+        android:hint="Largest contributing industry"
         android:layout_below="@+id/sen2NetWorth"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

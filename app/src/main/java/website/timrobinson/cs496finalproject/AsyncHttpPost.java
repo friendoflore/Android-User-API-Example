@@ -48,8 +48,7 @@ public class AsyncHttpPost extends AsyncTask<String, String, String> {
 
         try {
             List<NameValuePair> postPairs = new ArrayList<NameValuePair>(2);
-//                postPairs.add(new BasicNameValuePair("username", usernameSubmit));
-//                postPairs.add(new BasicNameValuePair("password", passwordSubmit));
+
             Iterator<String> it = mData.keySet().iterator();
 
             while (it.hasNext()) {

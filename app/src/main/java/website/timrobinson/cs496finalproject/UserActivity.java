@@ -65,16 +65,12 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
         final String[] stateURL = new String[1];
         final String[] senatorURL1 = new String[1];
         final String[] senatorURL2 = new String[1];
-//        Toast urlToast = Toast.makeText(getApplicationContext(), "URL: " + userURL, Toast.LENGTH_SHORT);
-//        urlToast.show();
 
         // Get the user data
         AsyncHttpGet asyncHttpGet = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
             @Override
             public void processFinish(String output) {
                 userData[0] = output;
-//                Toast testToast = Toast.makeText(getApplicationContext(), userData[0], Toast.LENGTH_SHORT);
-//                testToast.show();
 
                 JSONObject userJSON;
 
@@ -107,8 +103,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                             @Override
                             public void processFinish(String output) {
                                 stateId[0] = output;
-//                                Toast testToast = Toast.makeText(getApplicationContext(), "State ID: " + stateId[0], Toast.LENGTH_SHORT);
-//                                testToast.show();
 
                                 stateURL[0] = "http://senators-1208.appspot.com/state/" + stateId[0];
 
@@ -118,8 +112,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                                     @Override
                                     public void processFinish(String output) {
                                         stateData[0] = output;
-//                                        Toast testToast = Toast.makeText(getApplicationContext(), "State data: " + stateData[0], Toast.LENGTH_SHORT);
-//                                        testToast.show();
 
                                         JSONObject stateDataObj;
 
@@ -139,9 +131,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                                                 public void processFinish(String output) {
                                                     senatorData1[0] = output;
 
-//                                                    Toast testToast = Toast.makeText(getApplicationContext(), "Sen 1 data: " + senatorData1[0], Toast.LENGTH_SHORT);
-//                                                    testToast.show();
-
                                                     JSONObject senator1Obj;
 
                                                     try {
@@ -159,9 +148,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                                                 @Override
                                                 public void processFinish(String output) {
                                                     senatorData2[0] = output;
-
-//                                                    Toast testToast = Toast.makeText(getApplicationContext(), "Sen 2 data: " + senatorData2[0], Toast.LENGTH_SHORT);
-//                                                    testToast.show();
 
                                                     JSONObject senator2Obj;
 
@@ -202,9 +188,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
         switch(v.getId()) {
             case R.id.EditButton:
                 // Go to CreateActivity
-//                String test = "Edit user";
-//                Toast toast = Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT);
-//                toast.show();
+
                 Intent goToEditActivity = new Intent(getApplicationContext(), EditActivity.class);
                 goToEditActivity.putExtra("USER_ID", userKey);
                 goToEditActivity.putExtra("username", username.getText());
@@ -214,9 +198,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                 break;
             case R.id.addStateButton:
                 // Go to LoginActivity
-//                String test2 = "Add state info";
-//                Toast toast2 = Toast.makeText(getApplicationContext(), test2, Toast.LENGTH_SHORT);
-//                toast2.show();
+
                 Intent goToAddStateActivity = new Intent(getApplicationContext(), AddStateActivity.class);
                 goToAddStateActivity.putExtra("USER_ID", userKey);
                 goToAddStateActivity.putExtra("state", state.getText());

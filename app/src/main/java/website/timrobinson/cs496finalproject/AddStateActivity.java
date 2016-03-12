@@ -205,8 +205,7 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                             goToSenators.putExtra("stateId", output);
                             startActivity(goToSenators);
                             finish();
-//                            Toast successToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-//                            successToast.show();
+//
                         }
                     }, stateData);
                     asyncHttpPostNewState.execute("http://senators-1208.appspot.com/state");

@@ -82,12 +82,11 @@ public class CreateUserActivity extends AppCompatActivity implements OnClickList
                 public void processFinish(String output) {
 
                     newUserKey[0] = output;
-//                    Toast testToast = Toast.makeText(getApplicationContext(), newUserKey[0], Toast.LENGTH_SHORT);
-//                    testToast.show();
 
                     Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
                     goToLoggedIn.putExtra("USER_ID", newUserKey[0]);
                     startActivity(goToLoggedIn);
+                    finish();
 
                 }
             }, data);

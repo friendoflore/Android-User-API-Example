@@ -39,17 +39,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         switch(v.getId()) {
             case R.id.create:
                 // Go to CreateActivity
-//                CharSequence test = "Create user";
-//                Toast toast = Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT);
-//                toast.show();
+
                 Intent goToCreateActivity = new Intent(getApplicationContext(), CreateUserActivity.class);
                 startActivity(goToCreateActivity);
                 break;
             case R.id.login:
                 // Go to LoginActivity
-//                CharSequence test2 = "Login";
-//                Toast toast2 = Toast.makeText(getApplicationContext(), test2, Toast.LENGTH_SHORT);
-//                toast2.show();
+
                 Intent goToLoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(goToLoginActivity);
                 break;

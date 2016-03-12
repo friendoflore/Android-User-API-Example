@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                         Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
                         goToLoggedIn.putExtra("USER_ID", userKey[0]);
                         startActivity(goToLoggedIn);
+                        finish();
                     }
                 }
             }, data);
