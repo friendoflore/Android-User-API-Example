@@ -5,9 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,11 +53,12 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
         editUser.setOnClickListener(this);
         addStateInfo.setOnClickListener(this);
 
-        // Load user data with GET request using Extra data from intent
+        // Load user data with GET request using Extra data from Intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userKey = extras.getString("USER_ID");
         }
+
         String userURL = "http://user-api-1246.appspot.com/user/" + userKey;
         final String stateSearchURL = "http://senators-1208.appspot.com/state/search";
         final String[] stateURL = new String[1];
@@ -74,6 +73,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
 
                 JSONObject userJSON;
 
+                // Display user data from JSON response
                 try {
                     userJSON = new JSONObject(userData[0]);
                     username.setText(userJSON.get("username").toString());
@@ -91,12 +91,14 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                     } else {
                         state.setText(userJSON.get("state").toString());
 
-                        // Do Get request of the other API
-                        // This will actually take 4 GET requests, since we'll get state id, Senator IDs
-                        // and then 2 more GET requests to get the senator names.
+                        // Get state and senator data
+                        // This will take 4 GET requests:
+                        // Get state ID with POST request,
+                        // Get state data with GET request
+                        //      Get senator IDs from returned JSON
+                        // Two more GET requests to get the senator data for each senator ID.
                         HashMap<String, String> data = new HashMap<String, String>();
                         data.put("name", userJSON.get("state").toString());
-
 
                         // Get the user's state ID
                         AsyncHttpPost asyncHttpPostStateId = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
@@ -105,7 +107,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
                                 stateId[0] = output;
 
                                 stateURL[0] = "http://senators-1208.appspot.com/state/" + stateId[0];
-
 
                                 // Get the user's state data
                                 AsyncHttpGet asyncHttpGetStateData = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
@@ -123,7 +124,6 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
 
                                             senatorURL1[0] = "http://senators-1208.appspot.com/senator/" + senatorKey1;
                                             senatorURL2[0] = "http://senators-1208.appspot.com/senator/" + senatorKey2;
-
 
                                             // Get the user's state's first senator
                                             AsyncHttpGet asyncHttpGetSenator1 = new AsyncHttpGet(new AsyncHttpGet.AsyncResponse() {
@@ -187,8 +187,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.EditButton:
-                // Go to CreateActivity
 
+                // Go to EditActivity
                 Intent goToEditActivity = new Intent(getApplicationContext(), EditActivity.class);
                 goToEditActivity.putExtra("USER_ID", userKey);
                 goToEditActivity.putExtra("username", username.getText());
@@ -197,8 +197,8 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
 
                 break;
             case R.id.addStateButton:
-                // Go to LoginActivity
 
+                // Go to AddStateActivity
                 Intent goToAddStateActivity = new Intent(getApplicationContext(), AddStateActivity.class);
                 goToAddStateActivity.putExtra("USER_ID", userKey);
                 goToAddStateActivity.putExtra("state", state.getText());
@@ -210,6 +210,7 @@ public class UserActivity extends AppCompatActivity implements OnClickListener{
         }
     }
 
+    // Reload data upon returning to this activity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Intent restartIntent = getIntent();
         finish();

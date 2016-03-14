@@ -16,9 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -77,17 +74,17 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                 double pLat = location.getLatitude();
                 double pLong = location.getLongitude();
 
+                // Display latitude and longitude
                 latitude.setText(Double.toString(pLat));
                 longitude.setText(Double.toString(pLong));
 
                 Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
+
+                // Get the user's US state using the lat and long coordinates
                 try {
                     List<Address> addresses = geoCoder.getFromLocation(pLat, pLong, 1);
                     stateString = addresses.get(0).getAdminArea();
                     state.setText(stateString);
-
-                    // Check to see if state is in the DB. If it is not, prompt the user if they
-                    // would like to add their state's data
 
                     HashMap<String, String> data = new HashMap<String, String>();
                     data.put("name", stateString);
@@ -111,10 +108,10 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                                 submitState.setVisibility(View.VISIBLE);
 
                             } else {
-                                // The state is not in the DB, expose input fields and "Add state info button"
+                                // The state is not in the DB, expose input fields and "Add state info" button
                                 // This state info culminates in a POST request to the state API
                                 // We then start the "AddSenatorsActivity"
-                                    // The AddSenatorsActivity will finish with 2 POST requests and a PUT request
+                                // The AddSenatorsActivity will finish with 2 POST requests and a PUT request
                                 submitState.setVisibility(View.GONE);
                                 population.setVisibility(View.VISIBLE);
                                 medianIncome.setVisibility(View.VISIBLE);
@@ -163,8 +160,6 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
 
                     @Override
                     public void processFinish(String output) {
-//                        Toast testToast = Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT);
-//                        testToast.show();
                         finish();
                         return;
                     }
@@ -175,6 +170,8 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                 boolean flag = true;
                 String toastMessage = "All fields must be completed";
                 Toast validateToast = Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT);
+
+                // Validate user input
                 if (population.getText().toString().trim().equals("")) {
                     flag = false;
                 }
@@ -189,7 +186,6 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                 }
 
                 if (flag) {
-                    // Run the POST, etc.
                     HashMap<String, String> stateData = new HashMap<String, String>();
                     stateData.put("name", state.getText().toString());
                     stateData.put("population", population.getText().toString());
@@ -197,6 +193,7 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                     stateData.put("median_income", medianIncome.getText().toString());
                     stateData.put("largest_employer", largestEmployer.getText().toString());
 
+                    // POST the user input
                     AsyncHttpPost asyncHttpPostNewState = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
                         @Override
                         public void processFinish(String output) {
@@ -205,11 +202,10 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
                             goToSenators.putExtra("stateId", output);
                             startActivity(goToSenators);
                             finish();
-//
+
                         }
                     }, stateData);
                     asyncHttpPostNewState.execute("http://senators-1208.appspot.com/state");
-
 
                 } else {
                     validateToast.show();
@@ -219,6 +215,5 @@ public class AddStateActivity extends AppCompatActivity implements OnClickListen
             default:
                 break;
         }
-
     }
 }

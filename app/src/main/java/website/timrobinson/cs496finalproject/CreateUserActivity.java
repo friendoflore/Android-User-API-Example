@@ -1,7 +1,6 @@
 package website.timrobinson.cs496finalproject;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,6 +50,7 @@ public class CreateUserActivity extends AppCompatActivity implements OnClickList
 
         boolean flag = true;
 
+        // Validate user input
         if (usernameSubmit.trim().equals("")) {
             Toast usernameToast = Toast.makeText(getApplicationContext(), usernameEmptyToast, Toast.LENGTH_SHORT);
             usernameToast.show();
@@ -70,8 +70,9 @@ public class CreateUserActivity extends AppCompatActivity implements OnClickList
         }
 
         if (flag) {
-            // Submit the created user to the API, use the response to get the key and go to logged in, sending in the key
 
+            // Submit the created user to the API, use the response to get the key and go to logged
+            // in, sending the user's key to the next activity
             HashMap<String, String> data = new HashMap<String, String>();
             data.put("username", usernameSubmit);
             data.put("password", passwordSubmit);
@@ -93,8 +94,4 @@ public class CreateUserActivity extends AppCompatActivity implements OnClickList
             asyncHttpPost.execute("http://user-api-1246.appspot.com/user");
         }
     }
-
-    // The goal here is to submit the user's data to https://user-api-1246.appspot.com/user
-    // Using a POST request
-
 }

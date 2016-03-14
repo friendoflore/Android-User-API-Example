@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
         boolean flag = true;
 
+        // Validate user input
         if (loginUsernameSubmit.trim().equals("")) {
             Toast usernameToast = Toast.makeText(getApplicationContext(), usernameEmptyToast, Toast.LENGTH_SHORT);
             usernameToast.show();
@@ -69,22 +70,22 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 @Override
                 public void processFinish(String output) {
-                    userKey[0] = output;
+                userKey[0] = output;
 
-                    if (userKey[0].equals("")) {
-                        Toast loginFailed = Toast.makeText(getApplicationContext(), "Either username or password is incorrect", Toast.LENGTH_SHORT);
-                        loginFailed.show();
-                    } else {
-                        Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
-                        goToLoggedIn.putExtra("USER_ID", userKey[0]);
-                        startActivity(goToLoggedIn);
-                        finish();
-                    }
+                // Check if login was successful
+                if (userKey[0].equals("")) {
+                    Toast loginFailed = Toast.makeText(getApplicationContext(), "Either username or password is incorrect", Toast.LENGTH_SHORT);
+                    loginFailed.show();
+                } else {
+                    Intent goToLoggedIn = new Intent(getApplicationContext(), UserActivity.class);
+                    goToLoggedIn.putExtra("USER_ID", userKey[0]);
+                    startActivity(goToLoggedIn);
+                    finish();
+                }
                 }
             }, data);
             asyncHttpPost.execute("http://user-api-1246.appspot.com/user/search");
 
         }
-
     }
 }

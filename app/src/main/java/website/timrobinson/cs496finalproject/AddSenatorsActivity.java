@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
@@ -69,6 +68,7 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
         String toastMessage = "All fields must be completed";
         Toast validateToast = Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT);
 
+
         szSen1Name = sen1Name.getText().toString();
         szSen1Years = sen1Years.getText().toString();
         szSen1NetWorth = sen1NetWorth.getText().toString();
@@ -77,6 +77,8 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
         szSen2Years = sen2Years.getText().toString();
         szSen2NetWorth = sen2NetWorth.getText().toString();
         szSen2LargestIndustry = sen2LargestIndustry.getText().toString();
+
+        // Validate user input
 
         if (szSen1Name.trim().equals("")) {
             flag = false;
@@ -124,12 +126,13 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
                     data2.put("net_worth", szSen2NetWorth);
                     data2.put("largest_ind_contributor", szSen2LargestIndustry);
 
+                    // Second POST
                     AsyncHttpPost asyncHttpPost2 = new AsyncHttpPost(new AsyncHttpPost.AsyncResponse() {
                         @Override
                         public void processFinish(String output) {
                             sen2Key = output;
 
-                            // 2 PUT requests here
+                            // Two PUT requests
                             putURL = "http://senators-1208.appspot.com/state/" + stateKey + "/senator/" + sen1Key;
                             AsyncHttpPut asyncHttpPut1 = new AsyncHttpPut(new AsyncHttpPut.AsyncResponse() {
                                 @Override
@@ -157,8 +160,6 @@ public class AddSenatorsActivity extends AppCompatActivity implements OnClickLis
             }, data);
             asyncHttpPost1.execute("http://senators-1208.appspot.com/senator");
 
-
-            // Do two PUT requests with the key from the intent and the keys we just got back
         } else {
             validateToast.show();
         }

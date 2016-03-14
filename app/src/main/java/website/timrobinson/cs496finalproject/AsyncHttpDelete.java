@@ -13,6 +13,14 @@ import java.io.IOException;
 
 /**
  * Created by friendofdata on 3/11/16.
+ * The Async series of events were inspired by the two following sources:
+ *
+ * https://gist.github.com/stanzheng/9467500
+ *  - For the AsyncHttp[Post|Get|Delete|Put] classes, extending the AsyncTask class
+ *
+ * http://stackoverflow.com/questions/12575068/how-to-get-the-result-of-onpostexecute-to-main-activity-because-asynctask-is-a/12575319#12575319
+ *  - For using the result of the Async HTTP request in the activity.
+ *
  */
 public class AsyncHttpDelete extends AsyncTask<String, String, String> {
     public interface AsyncResponse {

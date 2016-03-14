@@ -1,8 +1,6 @@
 package website.timrobinson.cs496finalproject;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -24,6 +22,13 @@ import java.util.List;
 
 /**
  * Created by friendofdata on 3/10/16.
+ * The Async series of events were inspired by the two following sources:
+ *
+ * https://gist.github.com/stanzheng/9467500
+ *  - For the AsyncHttp[Post|Get|Delete|Put] classes, extending the AsyncTask class
+ *
+ * http://stackoverflow.com/questions/12575068/how-to-get-the-result-of-onpostexecute-to-main-activity-because-asynctask-is-a/12575319#12575319
+ *  - For using the result of the Async HTTP request in the activity.
  */
 public class AsyncHttpPost extends AsyncTask<String, String, String> {
     private HashMap<String, String> mData = null;

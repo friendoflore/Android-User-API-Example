@@ -1,6 +1,5 @@
 package website.timrobinson.cs496finalproject;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -50,7 +48,6 @@ public class EditActivity extends AppCompatActivity implements OnClickListener{
             description.setText(descriptionText, EditText.BufferType.EDITABLE);
         }
 
-        // We need the user data for this one and then we'll do a POST request to "../edit"
     }
 
     @Override
